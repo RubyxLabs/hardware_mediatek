@@ -29,7 +29,10 @@ namespace gadget {
 using ::android::base::GetBoolProperty;
 using ::android::hardware::google::pixel::usb::kUvcEnabled;
 
-UsbGadget::UsbGadget() {
+UsbGadget::UsbGadget()
+    : mCurrentUsbFunctions(static_cast<long>(GadgetFunction::NONE)),
+      mCurrentUsbFunctionsApplied(false), mUsbSpeed(UsbSpeed::UNKNOWN),
+      mMonitorFfs(nullptr) {
     if (kGadgetName.empty()) {
         ALOGE("USB controller name not set");
         abort();
