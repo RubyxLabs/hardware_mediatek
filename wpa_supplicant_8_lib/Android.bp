@@ -3,16 +3,13 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-cc_library_static {
-    name: "lib_driver_cmd_mt66xx",
+cc_defaults {
+    name: "lib_driver_cmd_mt66xx_defaults",
     vendor: true,
     owner: "mtk",
     sanitize: {
         cfi: true,
     },
-    cflags: [
-        "-DCONFIG_ANDROID_LOG",
-    ],
     arch: {
         arm: {
             cflags: ["-mabi=aapcs-linux"],
@@ -32,5 +29,19 @@ cc_library_static {
         "external/wpa_supplicant_8/src/wps",
         "external/wpa_supplicant_8/wpa_supplicant",
         "external/libnl/include",
+    ],
+}
+
+cc_library_static {
+    name: "lib_driver_cmd_mt66xx",
+    defaults: ["lib_driver_cmd_mt66xx_defaults"],
+    cflags: ["-DCONFIG_ANDROID_LOG"],
+}
+
+cc_library_static {
+    name: "lib_driver_cmd_mt66xx_supplicant",
+    defaults: [
+        "lib_driver_cmd_mt66xx_defaults",
+        "wpa_supplicant_cflags_defaults",
     ],
 }
